@@ -1,0 +1,45 @@
+name: Update OpenWrt Feeds
+
+on:
+  schedule:
+    - cron: '0 16 * * *'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    name: Sync Upstream
+    if: github.repository_owner == 'lonecale'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          ref: main
+          token: ${{ secrets.OPENWRT_WORKFLOW_TOKEN }}
+
+      - name: Update Feeds
+        run: |
+          bash update.sh
+          echo "latest_release=$(TZ='Asia/Hong_Kong' date +'%Y%m%d')" >> $GITHUB_ENV
+
+      - name: Git Push
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add .
+          if ! git diff-index --quiet HEAD --; then
+            git commit -sm "Sync upstream up to ${{env.latest_release}}"
+            git push
+          else
+            echo "No changes to commit, skipping push."
+            echo "changes_committed=n" >> $GITHUB_ENV
+          fi
+
+      - name: Push Build
+        if: env.changes_committed != 'n'
+        id: push_openwrt_build
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.OPENWRT_WORKFLOW_TOKEN }}
+          repository: lonecale/openwrt-adguardhome
+          event-type: build
