@@ -1,1 +1,1 @@
-luci-app-adguardhome sirpdboy-package
+luci-app-adguardhome
