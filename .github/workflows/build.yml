@@ -20,7 +20,7 @@ jobs:
           - x86_64
         tag:
           - openwrt-23.05
-          - openwrt-18.06
+          - openwrt-22.03
 
     steps:
       - uses: actions/checkout@v4
