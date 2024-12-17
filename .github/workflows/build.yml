@@ -60,9 +60,10 @@ jobs:
         id: upload_release
         uses: svenstaro/upload-release-action@v2
         with:
-          repo_token: ${{ secrets.OPENWRT_WORKFLOW_TOKEN }}
-          release_name: OpenWrt-Packages-${{ matrix.arch }}-${{ matrix.tag }}  # 添加版本tag
-          tag: ${{ matrix.arch }}-${{ matrix.tag }}  # 添加版本tag
+          #repo_token: ${{ secrets.OPENWRT_WORKFLOW_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          release_name: OpenWrt-Packages-${{ matrix.arch }}
+          tag: ${{ matrix.arch }}
           body: Latest build on ${{env.latest_release}}
           file_glob: true
           overwrite: true
