@@ -7,10 +7,9 @@ mv */ /tmp/extd/
 
 # download feeds
 git clone https://github.com/sirpdboy/luci-app-adguardhome luci-app-adguardhome -b main --depth 1
-mv luci-app-adguardhome/luci-app-adguardhome ./
 
 # 删除 sirpdboy-package/.git
-rm -rf luci-app-adguardhome
+rm -rf luci-app-adguardhome/.git
 
 # 输出目录列表并保存到 packages.txt
 ls -d */ | xargs -n 1 basename | paste -sd ' ' - > packages.txt
