@@ -6,7 +6,7 @@ mkdir -p /tmp/extd/
 mv */ /tmp/extd/
 
 # download feeds
-git clone https://github.com/sirpdboy/luci-app-adguardhome luci-app-adguardhome -b main --depth 1
+git clone https://github.com/sirpdboy/luci-app-adguardhome luci-app-adguardhome -b js --depth 1
 
 # 删除 sirpdboy-package/.git
 rm -rf luci-app-adguardhome/.git
